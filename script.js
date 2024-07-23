@@ -1,35 +1,22 @@
 function getComputerChoice() {
   num = Math.random();
   if (num >= 0 && num < 0.33) {
-    return "rock";
+    return "Rock";
   }
   else if (num >= 0.33 && num < 0.66) {
-    return "paper";
+    return "Paper";
   }
   else {
-    return "scissors";
+    return "Scissors";
   };
 }
 
-function getHumanChoice() {
-  humanChoice = " ";
-  do {
-    humanChoice = prompt("Please enter rock, paper, or scissors: ").toLowerCase();
-  } while (humanChoice != "rock" && humanChoice != "paper" && humanChoice != "scissors");
-  return humanChoice;
-}
+// Variables are accessible by playRound, so long as playRound func is declared inside playGame
+let humanScore = 0;
+let computerScore = 0;
 
-function playGame() {
-
-  // Variables are accessible by playRound, so long as playRound func is declared inside playGame
-  let humanScore = 0;
-  let computerScore = 0;
-
-  function playRound(humanChoice, computerChoice) {
-    // Reformats choice by capitalizing the first letter
-    humanChoice = humanChoice[0].toUpperCase() + humanChoice.slice(1);
-    computerChoice = computerChoice [0].toUpperCase() + computerChoice.slice(1);
-    
+function playRound(humanChoice, computerChoice) {
+    console.log(humanChoice, computerChoice);
     // Default outcome of round is "Tie"
     let winner = "Tie";
     
@@ -46,35 +33,43 @@ function playGame() {
   
     // Update scores based on winner
     if (winner == "Human") {
-      humanScore = humanScore + 1
-      console.log(`You won. ${humanChoice} beats ${computerChoice}.`)
+      humanScore = humanScore + 1;
+      div_display.textContent = `You won. ${humanChoice} beats ${computerChoice}.`;
     }
     else if (winner == "Computer") {
-      computerScore = computerScore + 1
-      console.log(`You lost. ${computerChoice} beats ${humanChoice}.`)
+      computerScore = computerScore + 1;
+      div_display.textContent = `You lost. ${computerChoice} beats ${humanChoice}.`;
     }
     else {
-      console.log(`You tied. Both of you played ${computerChoice}.`)
+      div_display.textContent = `You tied. Both of you played ${computerChoice}.`;
     }
   }
 
-  // Play five rounds by iterating from 0 to 4
-  const numberOfRounds = 5;
-  for (let i = 0; i < numberOfRounds; i++) {
-    let humanSelection = getHumanChoice();
-    let computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
-  }
+// Create div display
+const div_display = document.createElement("div");
 
-  // Determine overall winner
-  if (humanScore > computerScore) {
-    console.log(`You won ${humanScore} games out of 5!`)
-  }
-  else if (computerScore > humanScore) {
-    console.log(`The computer won ${computerScore} games out of 5!`)
-  }
-  else {
-    console.log("You tied with the computer.")
-  }
+// Create buttons
+const rock_button = document.createElement("button");
+rock_button.textContent = "Rock";
+const paper_button = document.createElement("button");
+paper_button.textContent = "Paper";
+const scissors_button = document.createElement("button");
+scissors_button.textContent = "Scissors";
 
-}
+// Append children
+document.body.appendChild(rock_button);
+document.body.appendChild(paper_button);
+document.body.appendChild(scissors_button);
+document.body.appendChild(div_display);
+
+// Add event listeners
+rock_button.addEventListener('click', () => {
+	playRound("Rock", getComputerChoice());
+});
+paper_button.addEventListener('click', () => {
+	playRound("Paper", getComputerChoice());
+});
+scissors_button.addEventListener('click', () => {
+	playRound("Scissors", getComputerChoice());
+});
+
