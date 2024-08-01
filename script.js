@@ -45,10 +45,11 @@ function playRound(humanChoice, computerChoice) {
     }
   }
 
-// Create div display
+// Create div for displaying results
 const div_display = document.createElement("div");
 
-// Create buttons
+// Create buttons for selecting a move
+// Assign text property of button to corresponding move
 const rock_button = document.createElement("button");
 rock_button.textContent = "Rock";
 const paper_button = document.createElement("button");
@@ -62,7 +63,8 @@ document.body.appendChild(paper_button);
 document.body.appendChild(scissors_button);
 document.body.appendChild(div_display);
 
-// Add event listeners
+// Add event listeners to each button
+// Anytime a button is clicked, playRound is called
 rock_button.addEventListener('click', () => {
 	playRound("Rock", getComputerChoice());
 });
